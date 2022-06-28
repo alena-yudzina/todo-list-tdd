@@ -1,11 +1,11 @@
+from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 import time
-import unittest
 
 
-class NewVisitorTest(unittest.TestCase):
+class NewVisitorTest(LiveServerTestCase):
     """Тест нового посетителя"""
 
     def setUp(self):
@@ -28,7 +28,7 @@ class NewVisitorTest(unittest.TestCase):
 
         # Эдит слышала про крутое новое онлайн-приложение со списком
         # неотложных дел. Она решает оценить его домашнюю страницу
-        self.browser.get('http://localhost:8000')
+        self.browser.get(self.live_server_url)
 
         # Она видит, что заголовок и шапка страницы говорят о списках
         # неотложных дел
@@ -55,7 +55,7 @@ class NewVisitorTest(unittest.TestCase):
         # Текстовое поле по-прежнему приглашает ее добавить еще один элемент.
         # Она вводит "Сделать мушку из павлиньих перьев"
         # (Эдит очень методична)
-        inputbox = self.browser.find_element(By.Id, 'id_new_item')
+        inputbox = self.browser.find_element(By.ID, 'id_new_item')
         inputbox.send_keys('Сделать мушку из павлиньих перьев')
         inputbox.send_keys(Keys.ENTER)
         time.sleep(1)
@@ -72,7 +72,3 @@ class NewVisitorTest(unittest.TestCase):
         # Она посещает этот URL-адрес – ее список по-прежнему там.
 
         # Удовлетворенная, она снова ложится
-
-
-if __name__ == '__main__':
-    unittest.main(warnings='ignore')
